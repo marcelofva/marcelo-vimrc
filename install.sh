@@ -7,7 +7,9 @@
 #   ./compile_full_vim.sh
 # Credits: Sevko (https://gist.github.com/sevko/870123c1c54cbd6661fc)
 
+
 main(){
+	DIR=$(pwd)
 	echo "y" | sudo apt-get remove \
 		vim \
 		vim-runtime \
@@ -26,11 +28,12 @@ main(){
 		libx11-dev \
 		libxpm-dev \
 		libxt-dev \
-		python-dev ruby-dev \
+		python3.6-dev \
+		ruby-dev \
 		mercurial
 
 	cd ~
-	git clone git@github.com:vim/vim.git --depth=1
+	git clone https://github.com/vim/vim.git --depth=1
 	cd vim
 	./configure --with-features=huge \
 		--enable-multibyte \
@@ -44,6 +47,8 @@ main(){
 		--prefix=/usr
 	make VIMRUNTIMEDIR=/usr/share/vim/vim81
 	sudo make install
+	cp ${DIR}/vim.config ~/.vimrc
+	sudo ln -sfn /usr/bin/vi /usr/bin/vim
 }
 
 main
